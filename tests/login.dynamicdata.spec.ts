@@ -3,7 +3,7 @@ import { LoginPage } from "../pages/LoginPage";
 import loginData from "../test-data/loginDataNew.json";
 
 loginData.forEach((data) => {
-    if (!data.run) return; // Skip tests where run is false
+    if (data.run.trim().toLowerCase() !== "yes") return; // Skip tests where run is not yes
     test(`login test ${data.username}`, async ({ page }) => {
         const loginPage = new LoginPage(page);
 

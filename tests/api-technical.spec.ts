@@ -112,8 +112,8 @@ test.describe('API Technical Examples', () => {
 
     expect(response.status()).toBe(200);
 
-    const body = await response.text();
-    expect(body).toBe('');
+    const body = await response.json();
+    expect(body).toEqual({});
   });
 
   test('Validate response schema for an object', async ({ request }) => {
