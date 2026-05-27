@@ -1,0 +1,24 @@
+{
+  "name": "playwrighttsproject1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:api": "npx playwright test tests/api.spec.ts",
+    "test:api:technical": "npx playwright test tests/api-technical.spec.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "@types/xlsx": "^0.0.35"
+  },
+  "dependencies": {
+    "csv-parse": "^6.2.1",
+    "xlsx": "^0.18.5"
+  }
+}
