@@ -5,14 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
-    "test:api": "npx playwright test tests/api.spec.ts",
-    "test:api:technical": "npx playwright test tests/api-technical.spec.ts"
+    "test:ui": "npx playwright test tests/ui",
+    "test:api": "npx playwright test tests/api",
+    "test:a11y": "npx playwright test tests/accessibility",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
     "@types/xlsx": "^0.0.35"

@@ -1,6 +1,4 @@
-import { test, expect } from '@playwright/test';
-
-const API_BASE = 'https://jsonplaceholder.typicode.com';
+import { expect, test } from '../../fixtures/baseFixture';
 
 // Este archivo contiene ejemplos útiles para una prueba técnica de API.
 // Cada test demuestra una operación REST diferente y su propósito.
@@ -40,7 +38,7 @@ test.describe('API Technical Examples', () => {
     });
   });
 
-  test('Create resource with POST (create / insert)', async ({ request }) => {
+  test('Create resource with POST (create / insert)', async ({ apiHelper }) => {
     // POST crea un recurso nuevo en el servidor.
     const payload = {
       title: 'Nuevo post desde Playwright',
@@ -48,12 +46,7 @@ test.describe('API Technical Examples', () => {
       userId: 99,
     };
 
-    const response = await request.post(`${API_BASE}/posts`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: payload,
-    });
+    const response = await apiHelper.createPost(payload);
 
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(201);
@@ -63,7 +56,7 @@ test.describe('API Technical Examples', () => {
     expect(body.id).toBeTruthy();
   });
 
-  test('Replace resource with PUT (full update)', async ({ request }) => {
+  test('Replace resource with PUT (full update)', async ({ apiHelper }) => {
     // PUT reemplaza todo el recurso existente con una nueva representación.
     const updatePayload = {
       id: 1,
@@ -72,12 +65,7 @@ test.describe('API Technical Examples', () => {
       userId: 1,
     };
 
-    const response = await request.put(`${API_BASE}/posts/1`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: updatePayload,
-    });
+    const response = await apiHelper.updatePost(1, updatePayload);
 
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(200);
@@ -86,18 +74,13 @@ test.describe('API Technical Examples', () => {
     expect(body).toEqual(updatePayload);
   });
 
-  test('Update resource with PATCH (partial update)', async ({ request }) => {
+  test('Update resource with PATCH (partial update)', async ({ apiHelper }) => {
     // PATCH actualiza solo algunos campos del recurso, no todo el objeto.
     const patchPayload = {
       title: 'Actualización parcial con PATCH',
     };
 
-    const response = await request.patch(`${API_BASE}/posts/1`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: patchPayload,
-    });
+    const response = await apiHelper.patchPost(1, patchPayload);
 
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(200);
@@ -106,9 +89,9 @@ test.describe('API Technical Examples', () => {
     expect(body).toMatchObject(patchPayload);
   });
 
-  test('Delete resource with DELETE (remove object)', async ({ request }) => {
+  test('Delete resource with DELETE (remove object)', async ({ apiHelper }) => {
     // DELETE elimina el recurso indicado.
-    const response = await request.delete(`${API_BASE}/posts/1`);
+    const response = await apiHelper.deletePost(1);
 
     expect(response.status()).toBe(200);
 
@@ -116,9 +99,9 @@ test.describe('API Technical Examples', () => {
     expect(body).toEqual({});
   });
 
-  test('Validate response schema for an object', async ({ request }) => {
+  test('Validate response schema for an object', async ({ apiHelper }) => {
     // GET lee un recurso y valida que la respuesta cumple el contrato esperado.
-    const response = await request.get(`${API_BASE}/posts/1`);
+    const response = await apiHelper.getPost(1);
     expect(response.ok()).toBeTruthy();
 
     const body = await response.json();
@@ -132,9 +115,9 @@ test.describe('API Technical Examples', () => {
     );
   });
 
-  test('Handle 404 Not Found gracefully', async ({ request }) => {
+  test('Handle 404 Not Found gracefully', async ({ apiHelper }) => {
     // Prueba que el sistema maneja un recurso inexistente con un 404.
-    const response = await request.get(`${API_BASE}/posts/99999999`);
+    const response = await apiHelper.getPost(99999999);
     expect(response.status()).toBe(404);
   });
 

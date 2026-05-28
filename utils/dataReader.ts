@@ -8,13 +8,10 @@ export function readData(filePath: string, sheetName?: string) {
 
     switch (ext) {
         case '.csv':
-            console.log('Reading CSV file');
             return readCSV(filePath);
         case '.xlsx':
-            console.log('Reading Excel file');
             return readExcel(filePath, sheetName || 'Sheet1');
         case '.json':
-            console.log('Reading JSON file');
             const JSONData = fs.readFileSync(filePath, 'utf-8');
             return JSON.parse(JSONData);
         default:

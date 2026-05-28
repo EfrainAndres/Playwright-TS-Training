@@ -9,7 +9,7 @@
     "username": "locked_out_user",
     "password": "secret_sauce",
     "expected": "error",
-    "run": "no"
+    "run": "yes"
   },
   {
     "username": "problem_user",

@@ -6,17 +6,19 @@ export class LoginPage {
     readonly passwordInput: Locator;
     readonly loginButton: Locator;
     readonly errorMessage: Locator;
+    readonly inventoryContainer: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.usernameInput = page.locator("#user-name");
-        this.passwordInput = page.locator("#password");
-        this.loginButton = page.locator("#login-button");
-        this.errorMessage = page.locator("[data-test='error']"); // Assuming the error message has a data-test attribute for easier selection
+        this.usernameInput = page.locator('[data-test="username"]');
+        this.passwordInput = page.locator('[data-test="password"]');
+        this.loginButton = page.locator('[data-test="login-button"]');
+        this.errorMessage = page.locator('[data-test="error"]');
+        this.inventoryContainer = page.locator('[data-test="inventory-container"]');
     }
 
     async goToLoginPage() {
-        await this.page.goto("https://www.saucedemo.com/");
+        await this.page.goto('https://www.saucedemo.com/');
     }
 
     async login(username: string, password: string) {
@@ -25,19 +27,15 @@ export class LoginPage {
         await this.loginButton.click();
     }
 
-    /*async verifyLoginSuccess() {
-        await expect(this.page).toHaveURL("https://www.saucedemo.com/inventory.html");
-        const title = await this.page.title();
-        await expect(title).toBe("Swag Labs");
-    }
-    async verifyLoginSuccess() {
+    async expectLoginSuccess() {
         await expect(this.page).toHaveURL(/inventory\.html$/);
-        const title = await this.page.title();
-        await expect(title).toBe("Swag Labs");
+        await expect(this.inventoryContainer).toBeVisible();
     }
 
-    async verifyLoginFailure() {
+    async expectLoginError(
+        expectedMessage = 'Epic sadface: Username and password do not match any user in this service'
+    ) {
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText("Epic sadface: Username and password do not match any user in this service");
-    }*/       
+        await expect(this.errorMessage).toHaveText(expectedMessage);
+    }
 }
