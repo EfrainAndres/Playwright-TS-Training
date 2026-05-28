@@ -8,6 +8,8 @@
     "test:ui": "npx playwright test tests/ui",
     "test:api": "npx playwright test tests/api",
     "test:a11y": "npx playwright test tests/accessibility",
+    "test:perf:smoke": "k6 run performance/smoke-test.js",
+    "test:perf:load": "k6 run performance/load-test.js",
     "test:headed": "npx playwright test --headed",
     "test:debug": "npx playwright test --debug"
   },
